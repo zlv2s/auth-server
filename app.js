@@ -82,7 +82,7 @@ router.post('/login', (req, res) => {
 
 app.use(router)
 
-let port = process.env.PORT | 3000
+let port = process.env.PORT || 3000
 
 app.listen(port, () => {
   console.log('App listening on port:' + port)
