@@ -23,6 +23,10 @@ const allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain)
 
 // router management
+router.get('/', (req, res) => {
+  res.status(200).send('Hello There !')
+})
+
 router.post('/register', (req, res) => {
   db.insert([
     req.body.name,
