@@ -27,13 +27,28 @@ router.get('/', (req, res) => {
   res.status(200).send('Hello There !')
 })
 
+router.get('/all', (req, res) => {
+  db.selectAll((err, users) => {
+    if (err) return res.status(500).send('Server error')
+    res.status(200).send({ users })
+  })
+})
+
+router.post('/delete', (req, res) => {
+  db.deleteById(req.body.id, err => {
+    if (err) res.status(500).send(err)
+    res.status(200).send('successfully deleted')
+  })
+})
+
 router.post('/register', (req, res) => {
   db.insert([
     req.body.name,
     req.body.email,
-    bcrypt.hashSync(req.body.password, 8)
+    bcrypt.hashSync(req.body.password, 8),
+    req.body.isAdmin
   ], err => {
-    if (err) return res.status(500).send('There was a problem registering the user')
+    if (err) return res.status(500).send(err)
 
     db.selectByEmail(req.body.email, (err, user) => {
       if (err) return res.status(500).send('There was a problem getting user')
@@ -46,11 +61,11 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/register-admin', (req, res) => {
-  db.insertAdmin([
+  db.insert([
     req.body.name,
     req.body.email,
     bcrypt.hashSync(req.body.password, 8),
-    1
+    req.body.isAdmin
   ], err => {
     if (err) return res.status(500).send('There was a problem registering the user')
 

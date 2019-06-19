@@ -25,24 +25,31 @@ class Db {
       })
   }
 
-  insertAdmin(user, callback) {
+  // insertAdmin(user, callback) {
+  //   return this.db.run(
+  //     'INSERT INTO user (name,email,user_pass,is_admin) VALUES (?,?,?,?)',
+  //     user, (err) => {
+  //       callback(err)
+  //     })
+  // }
+
+  selectAll(callback) {
+    return this.db.all(`SELECT * FROM user`, function (err, users) {
+      callback(err, users)
+    })
+  }
+
+  insert(user, callback) {
     return this.db.run(
       'INSERT INTO user (name,email,user_pass,is_admin) VALUES (?,?,?,?)',
       user, (err) => {
         callback(err)
       })
   }
-
-  selectAll(callback) {
-    return this.db.all(`SELECT * FROM user`, function (err, rows) {
-      callback(err, rows)
-    })
-  }
-
-  insert(user, callback) {
+  deleteById(id, callback) {
     return this.db.run(
-      'INSERT INTO user (name,email,user_pass) VALUES (?,?,?)',
-      user, (err) => {
+      'DELETE FROM user WHERE id = ?',
+      [id], (err) => {
         callback(err)
       })
   }
