@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const db = new DB('sqlitedb')
 const app = express()
 const router = express.Router()
+const { str } = require('./template')
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
@@ -24,7 +25,7 @@ app.use(allowCrossDomain)
 
 // router management
 router.get('/', (req, res) => {
-  res.status(200).send('<h1>Hello World !</h1>')
+  res.status(200).send(str)
 })
 
 router.get('/all', (req, res) => {
