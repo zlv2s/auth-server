@@ -24,7 +24,7 @@ app.use(allowCrossDomain)
 
 // router management
 router.get('/', (req, res) => {
-  res.status(200).send('Hello There !')
+  res.status(200).send('<h1>Hello There !</h1>')
 })
 
 router.get('/all', (req, res) => {
